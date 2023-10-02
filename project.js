@@ -14,13 +14,18 @@ const ROWS = 3;
 const COLS = 3;
 
 const SYMBOLS_COUNT = {
-    "A": 2,
-    "B": 4,
-    "C": 6,
-    "D": 8
+    A: 2,
+    B: 4,
+    C: 6,
+    D: 8
 }
 
-
+const SYMBOL_VALUES = {
+    A: 5,
+    B: 4,
+    C: 3,
+    D: 2
+}
 
 /*
 FUNCTION: deposit()
@@ -102,9 +107,60 @@ const getBet = (balance, lines) => {
     }
 };
 
+/*
+FUNCTION: spin()
+PURPOSE:
+    1) "Spin" the slot machine for the user
+    2) Create an array w/ length equal to the sum of all counts
+        from the SYMBOL_COUNT array. The array will contain the symbols 
+        from SYMBOL_COUNT with each letter appearing a number of times
+        equal to said letter's count number. 
+    3) Make a selection w/o replacement for each reel randomly and assign to
+        a reels array with entries representing each reel value.
+        The output may look like the following:
+        [[A B C], [D D A], [D D D]] The sub-arrays are the columns, which
+        means we must transpose the sub arrays to be:
+        line 1 -> [A D D] 
+        line 2 -> [B D D]
+        line 3 -> [C A D]
+INPUTS: 
+    SYMBOLS_COUNT (global) - Symbols in the slot machine w/ quantity of symbols (Key/Value pair dict)
+    ROWS (global) - Number of Rows in slot machine
+    COLS (global) - Number of Columns in the slot machine
+OUTPUTS:
+    1) reels - Array of length (COLS-1) with indexes occupied by sub-arrays
+        representing the columns corresponding to each line of the reel
+*/
+
+const spin = () => {
+    const symbols = [];
+    // Iterate through the symbols
+    // symbol will be the letter from SYMBOLS_COUNT
+    // count will be the value from SYMBOLS_COUNT
+    for (const[symbol, count] of Object.entries(SYMBOLS_COUNT)){
+        for (let i = 0; i < count; i++){
+            symbols.push(symbol);
+        }
+    }
+    
+    const reels = [];
+    for (let i = 0; i < COLS; i++){ //For each reel
+        reels.push([]);
+        const reelSymbols = [...symbols]; //Generate available symbols
+        for (let j = 0; j < ROWS; j++){
+            const randomIndex = Math.floor(Math.random() * reelSymbols.length);
+            const selectedSymbol = reelSymbols[randomIndex]; // Select symbol at index
+            reels[i].push(selectedSymbol);  // Move the symbol to the reel
+            reelSymbols.splice(randomIndex, 1);  // remove the symbol from randomIndex
+        }
+    }
+    return reels;
+};
+
 let balance = deposit();
 console.log("You input: " + balance + "$");
 const numberOfLines = getNumberOfLines();
 console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous!");
 const bet = getBet(balance, numberOfLines);
 console.log("Your bet: " + bet);
+const reels = spin();
