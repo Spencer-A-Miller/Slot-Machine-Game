@@ -34,8 +34,6 @@ const deposit = () => {
         }
     }
 };
-const depositAmount = deposit();
-console.log("You input: " + depositAmount + "$");
 
 /*
 FUNCTION: getNumberOfLines()
@@ -47,7 +45,6 @@ INPUTS:
 OUTPUTS:
     1) numberOfLines - The number of lines the user is betting on (between 1-3) (INT)
 */
-
 const getNumberOfLines = () => {
     while (true) {
         const lines = prompt("Enter the number of lines to bet on (1-3): ");
@@ -63,6 +60,39 @@ const getNumberOfLines = () => {
             return numberOfLines;
         }
     }
-}
+};
+
+/*
+FUNCTION: getBet()
+PURPOSE:
+    1) Prompt the user to input their bet for each line
+    2) Input validation for NaNs, negative numbers, and out of balance bets
+INPUTS: 
+    balance - User's balance (to make sure they don't overbet)
+    lines - Num. lines the user is betting on. Max bet is balace/lines
+OUTPUTS:
+    1) numberOfLines - The number of lines the user is betting on (between 1-3) (INT)
+*/
+const getBet = (balance, lines) => {
+    while (true) {
+        const bet = prompt("Enter the bet per line: ");
+        const numberBet = parseFloat(bet);
+
+        if (isNaN(numberBet) || numberBet <= 0){
+            console.log("Invalid bet, try again.")
+        } else if (Number.isInteger(numberBet) != true){
+            console.log("Please select a whole number for your bet.")
+        }else if (numberBet > (balance / lines)){
+            console.log("Amount Entered exceedes balance. Please decrease your bet and try again.")  
+        } else {
+            return numberBet;
+        }
+    }
+};
+
+let balance = deposit();
+console.log("You input: " + balance + "$");
 const numberOfLines = getNumberOfLines();
 console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous!");
+const bet = getBet(balance, numberOfLines);
+console.log("Your bet: " + bet);
