@@ -22,7 +22,7 @@ OUTPUTS:
 */
 const deposit = () => {
     while (true) {
-        const depositAmount = prompt("Enter a deposit amount: "); // Prompt user tp input starting Money
+        const depositAmount = prompt("Enter a deposit amount: "); // Prompt user to input starting Money
         const numberDepositAmount = parseFloat(depositAmount);
 
         if (isNaN(numberDepositAmount) || numberDepositAmount <= 0){
@@ -34,6 +34,35 @@ const deposit = () => {
         }
     }
 };
-
 const depositAmount = deposit();
-console.log("You input: " + depositAmount + "\nMay your Spins be most fortuitous!");
+console.log("You input: " + depositAmount + "$");
+
+/*
+FUNCTION: getNumberOfLines()
+PURPOSE:
+    1) Prompt the user to input how many lines they are betting on.
+    2) Input validation for NaNs and negative numbers
+INPUTS: 
+    NONE
+OUTPUTS:
+    1) numberOfLines - The number of lines the user is betting on (between 1-3) (INT)
+*/
+
+const getNumberOfLines = () => {
+    while (true) {
+        const lines = prompt("Enter the number of lines to bet on (1-3): ");
+        const numberOfLines = parseFloat(lines);
+
+        if (isNaN(numberOfLines) || numberOfLines < 1){
+            console.log("Invalid number of lines, try again.")
+        } else if (Number.isInteger(numberOfLines) != true){
+            console.log("Please select a whole number (1-3) lines to bet on.")
+        }else if (numberOfLines > 3){
+            console.log("Amount Entered too many to spin, Please select (1-3) lines.")  
+        } else {
+            return numberOfLines;
+        }
+    }
+}
+const numberOfLines = getNumberOfLines();
+console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous!");
