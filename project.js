@@ -10,6 +10,11 @@
 
 const prompt = require("prompt-sync")();
 
+const ROWS = 3;
+const COLS = 3;
+
+
+
 /*
 FUNCTION: deposit()
 PURPOSE:
@@ -43,19 +48,19 @@ PURPOSE:
 INPUTS: 
     NONE
 OUTPUTS:
-    1) numberOfLines - The number of lines the user is betting on (between 1-3) (INT)
+    1) numberOfLines - The number of lines the user is betting on (between 1-ROWS) (INT)
 */
 const getNumberOfLines = () => {
     while (true) {
-        const lines = prompt("Enter the number of lines to bet on (1-3): ");
+        const lines = prompt("Enter the number of lines to bet on (1-" + ROWS + "): ");
         const numberOfLines = parseFloat(lines);
 
         if (isNaN(numberOfLines) || numberOfLines < 1){
             console.log("Invalid number of lines, try again.")
         } else if (Number.isInteger(numberOfLines) != true){
-            console.log("Please select a whole number (1-3) lines to bet on.")
-        }else if (numberOfLines > 3){
-            console.log("Amount Entered too many to spin, Please select (1-3) lines.")  
+            console.log("Please select a whole number (1-" + ROWS + ") lines to bet on.")
+        }else if (numberOfLines > ROWS){
+            console.log("Amount Entered too many to spin, Please select (1-" + ROWS + ") lines.")  
         } else {
             return numberOfLines;
         }
