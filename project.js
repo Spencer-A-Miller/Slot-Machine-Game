@@ -125,11 +125,11 @@ PURPOSE:
         line 3 -> [C A D]
 INPUTS: 
     SYMBOLS_COUNT (global) - Symbols in the slot machine w/ quantity of symbols (Key/Value pair dict)
-    ROWS (global) - Number of Rows in slot machine
-    COLS (global) - Number of Columns in the slot machine
+    ROWS (global) - Number of Rows in slot machine (INT)
+    COLS (global) - Number of Columns in the slot machine (INT)
 OUTPUTS:
     1) reels - Array of length (COLS-1) with indexes occupied by sub-arrays
-        representing the columns corresponding to each line of the reel
+        representing the columns corresponding to each line of the reel (array)
 */
 
 const spin = () => {
@@ -156,6 +156,27 @@ const spin = () => {
     }
     return reels;
 };
+
+const transpose = (reels) => {
+    const rows = [];
+    for (let i = 0; i < ROWS; i++){
+        rows.push([]);
+        for (let j = 0; j < COLS; j++){
+            rows[i].push(reels[j][i])
+        }
+    }
+    return rows;
+}
+
+/*
+FUNCTION: deposit()
+PURPOSE:
+    1) Transpose the matrix reels
+INPUTS: 
+    reels - 
+OUTPUTS:
+    1) rows - The transpose of reels (array)
+*/
 
 let balance = deposit();
 console.log("You input: " + balance + "$");
