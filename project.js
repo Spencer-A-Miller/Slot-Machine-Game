@@ -191,7 +191,37 @@ const printRows = (rows) => {
         }
         console.log(rowString)
    } 
-}
+};
+
+/*
+FUNCTION: getWinnings()
+PURPOSE:
+    1) Calculate the winnings based off the rows (symbol value), the user's bet, and the lines.
+    2) Take the user's bet if they lose and give the user their winnings if they win.
+INPUTS: 
+    rows (array) - array of arrays.
+    bet (INT) - user's bet
+OUTPUTS:
+    1) winnings (INT) - Added to the user's balance if they win.
+*/
+
+const getWinnings = (rows, bet, lines) => {
+    let winnings = 0;
+    for (let row = 0; row < lines; row++){
+        const symbols = rows[row];
+        let allSame = true;
+        for (const symbol of symbols){
+            if (symbol != symbols[0]){
+                allSame = false;
+                break;
+            }
+        }
+        if (allSame){
+            winnings += bet * SYMBOL_VALUES[symbols[0]]
+        }
+    }
+    return winnings;
+};
 
 let balance = deposit();
 console.log("You input: " + balance + "$");
@@ -202,3 +232,5 @@ console.log("Your bet: " + bet);
 const reels = spin();
 const rows = transpose(reels);
 printRows(rows);
+const winnings = getWinnings(rows, bet, numberOfLines);
+console.log("You won, $" + winnings.toString())
