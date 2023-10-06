@@ -157,6 +157,16 @@ const spin = () => {
     return reels;
 };
 
+/*
+FUNCTION: transpose()
+PURPOSE:
+    1) Transpose the matrix reels
+INPUTS: 
+    reels - 
+OUTPUTS:
+    1) rows - The transpose of reels (array)
+*/
+
 const transpose = (reels) => {
     const rows = [];
     for (let i = 0; i < ROWS; i++){
@@ -166,17 +176,22 @@ const transpose = (reels) => {
         }
     }
     return rows;
-}
+};
 
-/*
-FUNCTION: deposit()
-PURPOSE:
-    1) Transpose the matrix reels
-INPUTS: 
-    reels - 
-OUTPUTS:
-    1) rows - The transpose of reels (array)
-*/
+// Iterate through every row inside of rows, which is just an array representing the symbols
+// inside of said row.
+const printRows = (rows) => {
+   for (const row of rows){
+        let rowString = ""; //"A | B | C"
+        for (const [i, symbol] of row.entries()){ // iterate the index and symbol in each row (row comes from rows)
+            rowString += symbol
+            if (i != row.length - 1){
+                rowString += " | " // If last element, don't put a pipe separator
+            }
+        }
+        console.log(rowString)
+   } 
+}
 
 let balance = deposit();
 console.log("You input: " + balance + "$");
@@ -185,3 +200,5 @@ console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous
 const bet = getBet(balance, numberOfLines);
 console.log("Your bet: " + bet);
 const reels = spin();
+const rows = transpose(reels);
+printRows(rows);
