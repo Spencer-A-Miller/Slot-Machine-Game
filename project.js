@@ -223,14 +223,31 @@ const getWinnings = (rows, bet, lines) => {
     return winnings;
 };
 
-let balance = deposit();
-console.log("You input: " + balance + "$");
-const numberOfLines = getNumberOfLines();
-console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous!");
-const bet = getBet(balance, numberOfLines);
-console.log("Your bet: " + bet);
-const reels = spin();
-const rows = transpose(reels);
-printRows(rows);
-const winnings = getWinnings(rows, bet, numberOfLines);
-console.log("You won, $" + winnings.toString())
+const game = () => {
+    let balance = deposit();
+
+    while(true){
+        console.log("You have a balance of $" + balance);
+        console.log("You input: " + balance + "$");
+        const numberOfLines = getNumberOfLines();
+        console.log("You input: " + numberOfLines + "\nMay your Spins be most fortuitous!");
+        const bet = getBet(balance, numberOfLines);
+        balance -= bet * numberOfLines;
+        console.log("Your bet: " + bet);
+        const reels = spin();
+        const rows = transpose(reels);
+        printRows(rows);
+        const winnings = getWinnings(rows, bet, numberOfLines);
+        balance += winnings;
+        console.log("You won, $" + winnings.toString());
+
+        if (balance <= 0){
+            console.log("You balance is empty!")
+            break;
+        }
+        const playAgain = prompt("Do you want to play again (y/n)? \n");
+        if (playAgain != "y") break;
+    }
+};
+
+game();
